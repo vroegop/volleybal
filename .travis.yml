@@ -13,4 +13,5 @@ matrix:
     - sh -e /etc/init.d/xvfb start
     script:
     - cd public
+    - npm i
     - npm run test
