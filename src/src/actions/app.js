@@ -3,7 +3,12 @@ export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
 export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
 export const OPEN_SNACKBAR = 'OPEN_SNACKBAR';
 export const CLOSE_SNACKBAR = 'CLOSE_SNACKBAR';
+export const UPDATE_EMAIL = 'UPDATE_EMAIL';
+export const SNACKBAR_MESSAGE = 'SNACKBAR_MESSAGE';
+export const LOGGED_IN = 'LOGGED_IN';
+export const LOGGED_OUT = 'LOGGED_OUT';
 
+let snackbarTimer;
 const SNACKBAR_TIME = 3000;
 
 export const navigate = (path) => (dispatch) => {
@@ -45,8 +50,6 @@ const updatePage = (page) => {
   };
 };
 
-let snackbarTimer;
-
 export const showSnackbar = () => (dispatch) => {
   dispatch({
     type: OPEN_SNACKBAR
@@ -59,7 +62,7 @@ export const showSnackbar = () => (dispatch) => {
 export const updateOffline = (offline) => (dispatch, getState) => {
   // Show the snackbar only if offline status changes.
   if (offline !== getState().app.offline) {
-    dispatch(showSnackbar());
+    dispatch(updateSnackbarMessage(`You are now ${offline ? 'offline' : 'online'}.`));
   }
   dispatch({
     type: UPDATE_OFFLINE,
@@ -67,9 +70,42 @@ export const updateOffline = (offline) => (dispatch, getState) => {
   });
 };
 
+export const oops = (message) => (dispatch) => {
+  dispatch(updateSnackbarMessage(message));
+};
+
+export const updateSnackbarMessage = (snackbarMessage) => (dispatch) => {
+  dispatch({
+    type: SNACKBAR_MESSAGE,
+    snackbarMessage
+  });
+  dispatch(showSnackbar());
+}
+
 export const updateDrawerState = (opened) => {
   return {
     type: UPDATE_DRAWER_STATE,
     opened
   };
+};
+
+export const updateEmail = (email) => {
+  return {
+    type: UPDATE_EMAIL,
+    email
+  };
+};
+
+export const loggedIn = () => (dispatch, getState) => {
+  dispatch(updateSnackbarMessage(`Je bent ingelogd als ${getState().app.email}.`));
+  dispatch({
+    type: LOGGED_IN
+  });
+};
+
+export const loggedOut = () => {
+  dispatch(updateSnackbarMessage('Je bent uitgelogd.'));
+  dispatch({
+    type: LOGGED_OUT
+  });
 };

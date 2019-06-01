@@ -85,6 +85,24 @@
   <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   <!-- Built with love using PWA Starter Kit -->
   <script type="module" src="src/components/app-base/beach-wrapper.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyDZF9-N-xv0dXZHh6NbkmUcpgjUwTkceRQ",
+      authDomain: "beach-volleybal.firebaseapp.com",
+      databaseURL: "https://beach-volleybal.firebaseio.com",
+      projectId: "beach-volleybal",
+      storageBucket: "beach-volleybal.appspot.com",
+      messagingSenderId: "180496650665",
+      appId: "1:180496650665:web:00ab2e4fdafc8311"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
 </body>
 
 </html>

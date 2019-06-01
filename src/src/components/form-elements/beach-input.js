@@ -70,11 +70,3 @@ export const BeachInputCss = css`
     left: 0%;
   }
 `;
-
-export const BeachInputHtml = (type, title) => html`
-<div class="group">
-    <input type="${type}" required="required"/>
-    <span class="bar"></span>
-    <label>${title}</label>
-</div>
-`;

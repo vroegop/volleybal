@@ -13,7 +13,10 @@ import { store } from '../../store.js';
 import {
     navigate,
     updateOffline,
-    updateDrawerState
+    updateDrawerState,
+    loggedIn,
+    loggedOut,
+    updateEmail,
 } from '../../actions/app.js';
 
 // These are the elements needed by this element.
@@ -21,7 +24,7 @@ import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
-import { menuIcon, volleybalIcon } from '../my-icons.js';
+import { menuIcon, volleybalIcon } from './my-icons.js';
 import './snack-bar.js';
 
 class BeachWrapper extends connect(store)(LitElement) {
@@ -31,7 +34,8 @@ class BeachWrapper extends connect(store)(LitElement) {
             _page: { type: String },
             _drawerOpened: { type: Boolean },
             _snackbarOpened: { type: Boolean },
-            _offline: { type: Boolean }
+            _offline: { type: Boolean },
+            _snackbarMessage: { type: String }
         };
     }
 
@@ -220,7 +224,7 @@ class BeachWrapper extends connect(store)(LitElement) {
       </footer>
 
       <snack-bar ?active="${this._snackbarOpened}">
-        You are now ${this._offline ? 'offline' : 'online'}.
+        ${this._snackbarMessage}
       </snack-bar>
     `;
     }
@@ -235,8 +239,16 @@ class BeachWrapper extends connect(store)(LitElement) {
     firstUpdated() {
         installRouter((location) => store.dispatch(navigate(decodeURIComponent(location.pathname))));
         installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
-        installMediaQueryWatcher(`(min-width: 460px)`,
-            () => store.dispatch(updateDrawerState(false)));
+        installMediaQueryWatcher(`(min-width: 460px)`, () => store.dispatch(updateDrawerState(false)));
+        
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            store.dispatch(updateEmail(user.email));
+            store.dispatch(loggedIn());
+          } else {
+            store.dispatch(loggedOut());
+          }
+        });
     }
 
     updated(changedProps) {
@@ -263,6 +275,7 @@ class BeachWrapper extends connect(store)(LitElement) {
         this._offline = state.app.offline;
         this._snackbarOpened = state.app.snackbarOpened;
         this._drawerOpened = state.app.drawerOpened;
+        this._snackbarMessage = state.app.snackbarMessage;
     }
 }
 

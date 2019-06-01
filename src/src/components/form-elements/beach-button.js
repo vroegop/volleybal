@@ -2,7 +2,7 @@ import { css } from 'lit-element';
 
 export const BeachButtonCss = css`
 button {
-  background: #eee;
+  background: #fff;
   color: #959595;
   border: none;
   padding: 10px 20px;
@@ -26,5 +26,8 @@ button[primary] {
 button[primary] {
   background: #0d8aee;
   color: #deeffd;
+}
+button[secondary] {
+  background: #eee;
 }
 `;
