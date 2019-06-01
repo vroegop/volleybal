@@ -7,24 +7,24 @@ import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
 
 // This element is connected to the Redux store.
-import { store } from '../store.js';
+import { store } from '../../store.js';
 
 // These are the actions needed by this element.
 import {
     navigate,
     updateOffline,
     updateDrawerState
-} from '../actions/app.js';
+} from '../../actions/app.js';
 
 // These are the elements needed by this element.
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
-import { menuIcon, volleybalIcon } from './my-icons.js';
+import { menuIcon, volleybalIcon } from '../my-icons.js';
 import './snack-bar.js';
 
-class BeachVolleybal extends connect(store)(LitElement) {
+class BeachWrapper extends connect(store)(LitElement) {
     static get properties() {
         return {
             appTitle: { type: String },
@@ -194,7 +194,7 @@ class BeachVolleybal extends connect(store)(LitElement) {
         <!-- This gets hidden on a small screen-->
         <nav class="toolbar-list">
           <a ?selected="${this._page === 'login'}" href="/login">Login</a>
-          <a ?selected="${this._page === 'view2'}" href="/view2">View Two</a>
+          <a ?selected="${this._page === 'home'}" href="/home">Home</a>
         </nav>
       </app-header>
 
@@ -204,19 +204,19 @@ class BeachVolleybal extends connect(store)(LitElement) {
           @opened-changed="${this._drawerOpenedChanged}">
         <nav class="drawer-list">
           <a ?selected="${this._page === 'login'}" href="/login">Login</a>
-          <a ?selected="${this._page === 'view2'}" href="/view2">View Two</a>
+          <a ?selected="${this._page === 'home'}" href="/home">Home</a>
         </nav>
       </app-drawer>
 
       <!-- Main content -->
       <main role="main" class="main-content">
         <beach-login class="page" ?active="${this._page === 'login'}"></beach-login>
-        <my-view2 class="page" ?active="${this._page === 'view2'}"></my-view2>
+        <beach-home class="page" ?active="${this._page === 'home'}"></beach-home>
         <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
       </main>
 
       <footer>
-        <p>Made with &hearts; by the Polymer team.</p>
+        <p>Made with &hearts; by Randy.</p>
       </footer>
 
       <snack-bar ?active="${this._snackbarOpened}">
@@ -266,4 +266,4 @@ class BeachVolleybal extends connect(store)(LitElement) {
     }
 }
 
-window.customElements.define('beach-volleybal', BeachVolleybal);
+window.customElements.define('beach-wrapper', BeachWrapper);

@@ -21,9 +21,9 @@
         <beach-login active></beach-login>
       </template>
     </test-fixture>
-    <test-fixture id="view2">
+    <test-fixture id="home">
       <template>
-        <my-view2 active></my-view2>
+        <beach-home active></beach-home>
       </template>
     </test-fixture>
     <test-fixture id="view404">
@@ -36,9 +36,9 @@
       import '@polymer/test-fixture';
       import 'axe-core/axe.min.js';
       import {axeReport} from 'pwa-helpers/axe-report.js';
-      import '../../src/components/beach-login.js';
-      import '../../src/components/my-view2.js';
-      import '../../src/components/my-view404.js';
+      import '../../src/components/pages/beach-login.js';
+      import '../../src/components/pages/beach-home.js';
+      import '../../src/components/pages/my-view404.js';
 
       suite('views a11y tests', function() {
         test('beach-login', function() {
@@ -46,8 +46,8 @@
           return axeReport(el);
         });
 
-        test('my-view2', function() {
-          const el = fixture('view2');
+        test('beach-home', function() {
+          const el = fixture('home');
           return axeReport(el);
         });
 
